@@ -1,5 +1,5 @@
-import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import UserMenuButton from "@/components/UserMenuButton";
 
 export default function DashboardLayout({
   children,
@@ -16,14 +16,7 @@ export default function DashboardLayout({
           >
             ProSono PDF&apos;s
           </Link>
-          <UserButton
-            afterSignOutUrl="/"
-            appearance={{
-              elements: {
-                avatarBox: "w-9 h-9",
-              },
-            }}
-          />
+          <UserMenuButton />
         </div>
       </header>
       <main className="mx-auto max-w-4xl flex-1 w-full px-4 py-8">{children}</main>
