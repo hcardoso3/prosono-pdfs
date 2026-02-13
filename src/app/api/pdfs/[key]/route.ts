@@ -25,7 +25,8 @@ export async function GET(
         "Content-Type": "application/pdf",
         "Content-Disposition": "inline",
         "X-Content-Type-Options": "nosniff",
-        "Cache-Control": "private, max-age=3600",
+        // Avoid edge/browser cache so updated PDFs in R2 are served immediately
+        "Cache-Control": "private, no-store, must-revalidate",
       },
     });
   } catch (e) {
