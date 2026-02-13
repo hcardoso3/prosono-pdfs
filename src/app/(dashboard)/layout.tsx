@@ -14,7 +14,7 @@ export default function DashboardLayout({
             href="/dashboard"
             className="font-marker-felt text-xl font-normal text-white"
           >
-            Pro Sono PDF&apos;s
+            ProSono PDF&apos;s
           </Link>
           <UserButton
             afterSignOutUrl="/"
