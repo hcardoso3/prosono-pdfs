@@ -1,5 +1,6 @@
 import Link from "next/link";
 import UserMenuButton from "@/components/UserMenuButton";
+import TermsGate from "@/components/TermsGate";
 
 export default function DashboardLayout({
   children,
@@ -19,7 +20,9 @@ export default function DashboardLayout({
           <UserMenuButton />
         </div>
       </header>
-      <main className="mx-auto max-w-4xl flex-1 w-full px-4 py-8">{children}</main>
+      <main className="mx-auto max-w-4xl flex-1 w-full px-4 py-8">
+        <TermsGate>{children}</TermsGate>
+      </main>
       <footer className="py-4 text-center text-xs font-light text-slate-400">
         DESENVOLVIDO POR PORTA 18
       </footer>
