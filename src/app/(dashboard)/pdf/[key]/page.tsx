@@ -12,8 +12,8 @@ export default async function PdfViewerPage({
   const streamUrl = `/api/pdfs/${encodeURIComponent(key)}`;
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] flex-col">
-      <div className="mb-2 flex items-center gap-2">
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="mb-2 flex shrink-0 items-center gap-2">
         <Link
           href="/dashboard"
           className="flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-800"
@@ -29,9 +29,6 @@ export default async function PdfViewerPage({
       <div className="min-h-0 flex-1 rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
         <PdfViewerClient url={streamUrl} fileName={fileName} />
       </div>
-      <p className="mt-2 text-center text-xs text-slate-500">
-        Visualização apenas. O download não está disponível.
-      </p>
     </div>
   );
 }

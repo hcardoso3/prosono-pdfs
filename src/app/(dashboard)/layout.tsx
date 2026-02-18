@@ -20,11 +20,19 @@ export default function DashboardLayout({
           <UserMenuButton />
         </div>
       </header>
-      <main className="mx-auto max-w-4xl flex-1 w-full px-4 py-8">
+      <main className="mx-auto flex max-w-4xl flex-1 flex-col w-full px-4 py-6">
         <TermsGate>{children}</TermsGate>
       </main>
       <footer className="py-4 text-center text-xs font-light text-slate-400">
-        DESENVOLVIDO POR PORTA 18
+        DESENVOLVIDO POR{" "}
+        <Link
+          href="https://porta18.pt"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-slate-500 hover:text-slate-700 underline underline-offset-2"
+        >
+          PORTA 18
+        </Link>
       </footer>
     </div>
   );

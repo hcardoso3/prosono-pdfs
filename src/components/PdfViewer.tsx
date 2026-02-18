@@ -51,7 +51,7 @@ export default function PdfViewer({ url, fileName }: Props) {
   const [pageNumber, setPageNumber] = useState(1);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "loading-lib" | "loading-doc" | "ready">("idle");
-  const [scale, setScale] = useState(1.2);
+  const [scale, setScale] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
