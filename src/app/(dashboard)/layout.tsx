@@ -15,7 +15,7 @@ export default function DashboardLayout({
             href="/dashboard"
             className="font-marker-felt text-xl font-normal text-white"
           >
-            ProSono PDF&apos;s
+            ProSono - Programa de Educação do Sono nas Escolas
           </Link>
           <UserMenuButton />
         </div>

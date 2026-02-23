@@ -9,6 +9,7 @@ export default async function PdfViewerPage({
 }) {
   const { key } = await params;
   const fileName = key ? decodeURIComponent(key).split("/").pop() ?? "documento.pdf" : "documento.pdf";
+  const displayName = fileName.replace(/\.pdf$/i, "");
   const streamUrl = `/api/pdfs/${encodeURIComponent(key)}`;
 
   return (
@@ -22,8 +23,8 @@ export default async function PdfViewerPage({
           Voltar
         </Link>
         <span className="text-slate-400">/</span>
-        <span className="truncate text-sm text-slate-600" title={fileName}>
-          {fileName}
+        <span className="truncate text-sm text-slate-600" title={displayName}>
+          {displayName}
         </span>
       </div>
       <div className="min-h-0 flex-1 rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">

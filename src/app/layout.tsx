@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { ptPT } from "@clerk/localizations";
+import { clerkLocalizationPtPT } from "@/lib/clerk-localization";
 import localFont from "next/font/local";
 import "@fontsource/google-sans";
 import "./globals.css";
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider localization={ptPT}>
+    <ClerkProvider localization={clerkLocalizationPtPT}>
       <html lang="pt-PT" className={markerFelt.variable}>
         <body>{children}</body>
       </html>

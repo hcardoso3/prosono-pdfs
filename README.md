@@ -74,3 +74,4 @@ Abre [http://localhost:3000](http://localhost:3000). Serás redirecionado para s
 
 - **Sem download:** o PDF é servido com `Content-Disposition: inline` e mostrado num iframe; não há link de download na UI. Um utilizador técnico pode tentar inspecionar o stream; para a maioria dos casos isto é suficiente.
 - **R2:** o bucket pode ter qualquer nome; só objetos com key terminada em `.pdf` aparecem na lista. Podes usar prefixos (ex.: `2024/relatorio.pdf`).
+- **Clerk em português:** a aplicação usa localização pt-PT (incluindo o modal de verificação ao alterar password). Para os **emails** enviados pelo Clerk (códigos de verificação, redefinição de palavra-passe, etc.) aparecerem em português, edita os templates em [Clerk Dashboard → Customization → Emails](https://dashboard.clerk.com/~/customization/email): escolhe cada template (ex. "Verification code") e altera o assunto e o corpo do texto para português.

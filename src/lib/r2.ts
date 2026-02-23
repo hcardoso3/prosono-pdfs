@@ -45,12 +45,15 @@ export async function listPdfs(): Promise<PdfItem[]> {
   const contents = (response.Contents ?? []) as _Object[];
   return contents
     .filter((obj) => obj.Key && (obj.Key.endsWith(".pdf") || obj.Key.toLowerCase().endsWith(".pdf")))
-    .map((obj) => ({
-      key: obj.Key!,
-      name: obj.Key!.split("/").pop() ?? obj.Key!,
-      size: obj.Size ?? 0,
-      lastModified: obj.LastModified,
-    }))
+    .map((obj) => {
+      const fullName = obj.Key!.split("/").pop() ?? obj.Key!;
+      return {
+        key: obj.Key!,
+        name: fullName.replace(/\.pdf$/i, ""),
+        size: obj.Size ?? 0,
+        lastModified: obj.LastModified,
+      };
+    })
     .sort((a, b) => (b.lastModified?.getTime() ?? 0) - (a.lastModified?.getTime() ?? 0));
 }
 

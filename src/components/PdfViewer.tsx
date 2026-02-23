@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // PDF.js 2.x UMD build — loaded via script tag so it never goes through webpack (avoids Object.defineProperty error)
 const PDFJS_VERSION = "2.16.105";
@@ -116,6 +117,32 @@ export default function PdfViewer({ url, fileName }: Props) {
     return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
   }, []);
 
+  // Keyboard navigation: setas esquerda/direita e Page Up/Page Down
+  const goPrev = useCallback(() => setPageNumber((p) => Math.max(1, p - 1)), []);
+  const goNext = useCallback(() => setPageNumber((p) => Math.min(numPages, p + 1)), [numPages]);
+
+  useEffect(() => {
+    if (status !== "ready" || numPages === 0) return;
+    function onKeyDown(e: KeyboardEvent) {
+      const target = e.target as HTMLElement;
+      if (target.closest("input") || target.closest("textarea") || target.isContentEditable) return;
+      switch (e.key) {
+        case "ArrowLeft":
+        case "PageUp":
+          e.preventDefault();
+          if (pageNumber > 1) goPrev();
+          break;
+        case "ArrowRight":
+        case "PageDown":
+          e.preventDefault();
+          if (pageNumber < numPages) goNext();
+          break;
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [status, numPages, pageNumber, goPrev, goNext]);
+
   function toggleFullscreen() {
     if (!containerRef.current) return;
     if (document.fullscreenElement) {
@@ -207,27 +234,9 @@ export default function PdfViewer({ url, fileName }: Props) {
               <ZoomInIcon />
             </button>
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setPageNumber((p) => Math.max(1, p - 1))}
-              disabled={pageNumber <= 1}
-              className="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 disabled:pointer-events-none disabled:opacity-50"
-            >
-              Anterior
-            </button>
-            <span className="text-sm text-slate-600">
-              Página {pageNumber} de {numPages}
-            </span>
-            <button
-              type="button"
-              onClick={() => setPageNumber((p) => Math.min(numPages, p + 1))}
-              disabled={pageNumber >= numPages}
-              className="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 disabled:pointer-events-none disabled:opacity-50"
-            >
-              Seguinte
-            </button>
-          </div>
+          <span className="min-w-[7rem] text-center text-sm text-slate-600">
+            Página {pageNumber} de {numPages}
+          </span>
           <button
             type="button"
             onClick={toggleFullscreen}
@@ -239,7 +248,28 @@ export default function PdfViewer({ url, fileName }: Props) {
           </button>
         </div>
       )}
-      <div className="min-h-0 flex-1 overflow-auto bg-slate-100">
+      <div className="relative min-h-0 flex-1 overflow-auto bg-slate-100">
+        {/* Setas à esquerda e direita, a meio do PDF */}
+        <button
+          type="button"
+          onClick={goPrev}
+          disabled={pageNumber <= 1}
+          className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-300 bg-white/95 text-slate-700 shadow-md hover:bg-white disabled:pointer-events-none disabled:opacity-40"
+          title="Página anterior (← ou Page Up)"
+          aria-label="Página anterior"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+        <button
+          type="button"
+          onClick={goNext}
+          disabled={pageNumber >= numPages}
+          className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-slate-300 bg-white/95 text-slate-700 shadow-md hover:bg-white disabled:pointer-events-none disabled:opacity-40"
+          title="Página seguinte (→ ou Page Down)"
+          aria-label="Página seguinte"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
         <div className="flex justify-center p-4">
           <canvas ref={canvasRef} className="shadow-md" />
         </div>

@@ -36,7 +36,7 @@ export async function listLocalPdfs(): Promise<PdfItem[]> {
       if (!st.isFile()) continue;
       items.push({
         key: name,
-        name,
+        name: name.replace(/\.pdf$/i, ""),
         size: st.size,
         lastModified: st.mtime,
       });
